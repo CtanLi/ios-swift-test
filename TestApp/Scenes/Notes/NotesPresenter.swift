@@ -7,35 +7,37 @@
 import Foundation
 
 protocol INotesPresenter {
-    func MockedNotes()
+    func fetchNotes()
+    func addNotes(dict: [NSDictionary])
     func searchBy(text: String)
 }
 
 class NotesPresenter: INotesPresenter {
 
     private weak var view: NotesView?
-
-    init(view: NotesView) {
+    private weak var addView: AddNotesView?
+    
+    init(view: NotesView?, addView: AddNotesView?) {
         self.view = view
+        self.addView = addView
     }
     
-    func MockedNotes() {
-           DispatchQueue.main.async {
-            self.view?.showNotes(notes: self.fetchMockNotes())
+    func fetchNotes() {
+          NotesService.shared.fetchData { (notes) in
+               DispatchQueue.main.async {
+                 self.view?.showNotes(notes: notes)
+             }
           }
       }
+      
+    func addNotes(dict: [NSDictionary]) {
+        NotesService.shared.addData(dict: dict) { 
+            self.addView?.dismissScreen()
+       }
+    }
     
     func searchBy(text: String) {
         
     }
 }
 
-extension NotesPresenter {
-    func fetchMockNotes() -> [Notes] {
-          let referenceDate = Date()
-        return (1...50).map {_ in
-          Notes(text:  "There are a number of features that make RandomText a little different from other Lorem Ipsum dummy text generators you may find around the web....", date: Date(timeIntervalSinceReferenceDate: .random(in: 0...referenceDate.timeIntervalSinceReferenceDate))) }.sorted(by: {
-                return $0.date > $1.date
-          })
-    }
-}

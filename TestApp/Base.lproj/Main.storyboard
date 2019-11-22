@@ -32,13 +32,13 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBr-86-ZiQ">
                                                     <rect key="frame" x="15" y="11" width="345" height="56"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSl-cs-S7l">
-                                                    <rect key="frame" x="15" y="84" width="199" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="15" y="84" width="345" height="20.5"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -47,9 +47,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="oBr-86-ZiQ" secondAttribute="trailing" constant="15" id="6Sv-29-19N"/>
                                                 <constraint firstItem="oBr-86-ZiQ" firstAttribute="top" secondItem="RvE-Hd-Lr5" secondAttribute="top" constant="11" id="7Yd-vx-Gd4"/>
                                                 <constraint firstAttribute="bottom" secondItem="oBr-86-ZiQ" secondAttribute="bottom" constant="72" id="8zz-di-XNS"/>
-                                                <constraint firstItem="uSl-cs-S7l" firstAttribute="leading" secondItem="RvE-Hd-Lr5" secondAttribute="leading" constant="15" id="N77-zJ-B9U"/>
-                                                <constraint firstAttribute="trailing" secondItem="uSl-cs-S7l" secondAttribute="trailing" constant="161" id="QLf-I6-I4h"/>
+                                                <constraint firstAttribute="trailing" secondItem="uSl-cs-S7l" secondAttribute="trailing" constant="15" id="Dga-6k-I64"/>
                                                 <constraint firstItem="uSl-cs-S7l" firstAttribute="top" secondItem="oBr-86-ZiQ" secondAttribute="bottom" constant="17" id="RsY-c0-Fge"/>
+                                                <constraint firstItem="uSl-cs-S7l" firstAttribute="leading" secondItem="oBr-86-ZiQ" secondAttribute="leading" id="TRo-lJ-wT1"/>
                                                 <constraint firstItem="oBr-86-ZiQ" firstAttribute="leading" secondItem="RvE-Hd-Lr5" secondAttribute="leading" constant="15" id="bge-et-OL4"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -73,14 +73,76 @@
                             <constraint firstItem="Vvw-8D-LKf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vPS-OV-vXT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7Yw-aD-Qam"/>
+                    <navigationItem key="navigationItem" id="7Yw-aD-Qam">
+                        <barButtonItem key="rightBarButtonItem" title="Add Note" id="ODo-8q-BLH">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addNote:" destination="BYZ-38-t0r" id="vpG-Vm-EN9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Vvw-8D-LKf" id="CGc-BW-8E2"/>
+                        <segue destination="caX-cI-7UI" kind="show" identifier="addNotesSegue" id="mfv-K9-YEH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="853.60000000000002" y="133.5832083958021"/>
+        </scene>
+        <!--Add Notes Controller-->
+        <scene sceneID="vBd-8g-jku">
+            <objects>
+                <viewController id="caX-cI-7UI" customClass="AddNotesController" customModule="TestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nQX-rD-BKn"/>
+                        <viewControllerLayoutGuide type="bottom" id="AnL-bP-q14"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Vv-17-138">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rfy-YI-Hpi">
+                                <rect key="frame" x="16" y="52" width="343" height="223"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8b9-z9-24N">
+                                <rect key="frame" x="100" y="293" width="175" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="L3L-Dl-KHb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="19"/>
+                                <state key="normal" title="ADD">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="addNoteAction:" destination="caX-cI-7UI" eventType="touchUpInside" id="Ugt-QA-DEa"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="AnL-bP-q14" firstAttribute="top" secondItem="8b9-z9-24N" secondAttribute="bottom" constant="328" id="1lS-dA-5Nu"/>
+                            <constraint firstItem="8b9-z9-24N" firstAttribute="top" secondItem="rfy-YI-Hpi" secondAttribute="bottom" constant="18" id="27Q-VE-uhg"/>
+                            <constraint firstItem="rfy-YI-Hpi" firstAttribute="top" secondItem="nQX-rD-BKn" secondAttribute="bottom" constant="8" id="7cj-mo-nt2"/>
+                            <constraint firstItem="8b9-z9-24N" firstAttribute="leading" secondItem="9Vv-17-138" secondAttribute="leading" constant="100" id="HKc-SD-w3d"/>
+                            <constraint firstAttribute="trailing" secondItem="rfy-YI-Hpi" secondAttribute="trailing" constant="16" id="KIl-4a-9Jj"/>
+                            <constraint firstAttribute="trailing" secondItem="8b9-z9-24N" secondAttribute="trailing" constant="100" id="Q13-YG-Q2C"/>
+                            <constraint firstItem="rfy-YI-Hpi" firstAttribute="leading" secondItem="9Vv-17-138" secondAttribute="leading" constant="16" id="niZ-3K-F3Y"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="For-BI-xA0"/>
+                    <connections>
+                        <outlet property="noteDescription" destination="rfy-YI-Hpi" id="oqy-ys-3oh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nDs-UQ-JTD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1645.5999999999999" y="133.5832083958021"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Thz-66-3ac">
