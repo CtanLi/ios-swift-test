@@ -8,19 +8,20 @@ import UIKit
 
 protocol NotesView: class {
     func showNotes(notes: [Notes])
+    func deleteNotes(notes: [Notes])
 }
 
-class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, NotesView {
-
-    
-   
+class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, NotesView, UpdateNotesTableViewDelegate {
+  
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Variables
     var unFilteredNotes = [Notes]()
+    var noteToEdit = Notes()
     var presenter: INotesPresenter?
     var searchController = UISearchController(searchResultsController: nil)
     var filteredNotes: [Notes]?
+    var isEditPressed = Bool()
     let addvcSegue = "addNotesSegue"
 
     // MARK: - Override
@@ -61,6 +62,15 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.reloadData()
     }
     
+    func deleteNotes(notes: [Notes]) {
+        
+    }
+    
+    func reloadNotes() {
+        presenter?.fetchNotes()
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let fNotes = filteredNotes else {
             return 0
@@ -77,12 +87,6 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
 
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-          if searchController.isActive && searchController.searchBar.text != "" {
-            
-        }
-    }
-    
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             filteredNotes = unFilteredNotes.filter { team in
@@ -99,3 +103,52 @@ class NotesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 }
 
+extension NotesViewController {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") {action, next  in
+            if let note = self.filteredNotes?[indexPath.row] {
+                self.presenter?.deleteNotes(note: note)
+                self.filteredNotes?.remove(at: indexPath.row)
+                if #available(iOS 11.0, *) {
+                    self.tableView.performBatchUpdates({
+                        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }) { (finished) in
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    // Fallback on earlier versions
+                    self.tableView.beginUpdates()
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    self.tableView.endUpdates()
+                }
+            }
+        }
+
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") {action, next  in
+            if let note = self.filteredNotes?[indexPath.row] {
+                self.isEditPressed = true
+                self.noteToEdit = note
+                 self.filteredNotes?.remove(at: indexPath.row)
+                self.performSegue(withIdentifier: self.addvcSegue, sender: self)
+            }
+        }
+        return [deleteAction, editAction]
+    }
+    
+     // MARK: - Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == addvcSegue) {
+            let addNoteController = segue.destination as! AddNotesController
+            addNoteController.delegate = self
+            addNoteController.isEditPressed = isEditPressed
+            addNoteController.noteToEdit = noteToEdit
+            self.isEditPressed = false
+        }
+     }
+}

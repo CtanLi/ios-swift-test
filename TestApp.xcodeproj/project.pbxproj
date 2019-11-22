@@ -63,9 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				8429C9DE1EAECD2C004A5E2B /* NotesViewController.swift */,
+				463F0D0F2387F5AE007B5BBA /* AddNotesController.swift */,
 				27248B5A223701D000344333 /* NotesPresenter.swift */,
 				463F0D0D2387DE25007B5BBA /* NotesCell.swift */,
-				463F0D0F2387F5AE007B5BBA /* AddNotesController.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";

@@ -60,4 +60,9 @@ class PersistanceService {
             }
         }
     }
+    
+    static func delete(_ object: NSManagedObject) {
+        persistentContainer.viewContext.delete(object)
+        saveContext()
+    }
 }

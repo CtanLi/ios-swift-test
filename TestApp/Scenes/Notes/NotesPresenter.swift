@@ -9,7 +9,8 @@ import Foundation
 protocol INotesPresenter {
     func fetchNotes()
     func addNotes(dict: [NSDictionary])
-    func searchBy(text: String)
+    func editNote(note: Notes)
+    func deleteNotes(note: Notes)
 }
 
 class NotesPresenter: INotesPresenter {
@@ -36,8 +37,16 @@ class NotesPresenter: INotesPresenter {
        }
     }
     
-    func searchBy(text: String) {
-        
+    func editNote(note: Notes) {
+        NotesService.shared.editNotes(note: note) {
+            self.addView?.dismissScreen()
+        }
+    }
+    
+    func deleteNotes(note: Notes) {
+        NotesService.shared.deleteNotes(note: note) {
+            self.addView?.dismissScreen()
+        }
     }
 }
 
